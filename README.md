@@ -1,6 +1,11 @@
 # Loved Ones - Scheduled Message Service
 
+[![GitHub](https://img.shields.io/github/stars/whyevenquestion1t/loved-ones-scheduler?style=social)](https://github.com/whyevenquestion1t/loved-ones-scheduler)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A SvelteKit application that allows users to schedule heartfelt, AI-generated messages for special occasions. Never miss a birthday, anniversary, or important moment again!
+
+🔗 **Repository**: https://github.com/whyevenquestion1t/loved-ones-scheduler
 
 ## Features
 
@@ -59,8 +64,8 @@ PUBLIC_APP_URL="http://localhost:5173"
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd loved-ones
+   git clone https://github.com/whyevenquestion1t/loved-ones-scheduler.git
+   cd loved-ones-scheduler
    ```
 
 2. **Install dependencies**
