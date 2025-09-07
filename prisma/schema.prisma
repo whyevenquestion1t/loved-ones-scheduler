@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messages Message[]
+  payments Payment[]
+
+  @@map("users")
+}
+
+model Message {
+  id          String        @id @default(cuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Recipient info
+  recipientName  String
+  recipientPhone String
+
+  // Message details
+  occasion       String
+  personalNote   String?
+  generatedMessage String?
+
+  // Scheduling
+  scheduledFor   DateTime
+  status         MessageStatus @default(PENDING)
+
+  // Payment
+  paymentId      String?
+  payment        Payment?      @relation(fields: [paymentId], references: [id])
+
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  sentAt         DateTime?
+
+  @@map("messages")
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  stripePaymentId String        @unique
+  amount          Int           // Amount in cents
+  status          PaymentStatus @default(PENDING)
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  messages        Message[]
+
+  @@map("payments")
+}
+
+enum MessageStatus {
+  PENDING
+  PAID
+  SCHEDULED
+  SENT
+  FAILED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
